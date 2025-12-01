@@ -20,7 +20,7 @@ impl Display for Direction {
 #[derive(Debug)]
 struct Rotation {
     direction: Direction,
-    distance: i32,
+    distance: i64,
 }
 
 impl Display for Rotation {
@@ -41,7 +41,7 @@ impl FromStr for Rotation {
             _ => return Err(format!("Unknown direction: {dir}")),
         };
 
-        let Ok(distance) = distance.parse::<i32>() else {
+        let Ok(distance) = distance.parse::<i64>() else {
             return Err(format!("Failed to parse distance: {distance}"));
         };
 
@@ -60,7 +60,7 @@ fn parse_input(input: &str) -> Vec<Rotation> {
 }
 
 struct Dial {
-    pub rotation: i32,
+    pub rotation: i64,
 }
 
 impl Dial {
@@ -86,7 +86,7 @@ impl Dial {
     }
 }
 
-pub fn part1(input: &str) -> Result<String, io::Error> {
+pub fn part1(input: &str) -> Result<i64, io::Error> {
     let rotations = parse_input(input);
 
     let mut dial = Dial::new();
@@ -98,10 +98,10 @@ pub fn part1(input: &str) -> Result<String, io::Error> {
         }
     }
 
-    Ok(points_at_zero.to_string())
+    Ok(points_at_zero)
 }
 
-pub fn part2(input: &str) -> Result<String, io::Error> {
+pub fn part2(input: &str) -> Result<i64, io::Error> {
     let rotations = parse_input(input);
 
     let mut dial = Dial::new();
@@ -116,7 +116,7 @@ pub fn part2(input: &str) -> Result<String, io::Error> {
         }
     }
 
-    Ok(points_at_zero.to_string())
+    Ok(points_at_zero)
 }
 
 #[allow(dead_code)]
@@ -135,6 +135,6 @@ L82
 
 aoc_tests!(
     EXAMPLE_INPUT,
-    part1 => "3".to_string(),
-    part2 => "6".to_string(),
+    part1 => 3,
+    part2 => 6,
 );
