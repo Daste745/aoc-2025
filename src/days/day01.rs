@@ -1,5 +1,7 @@
 use std::{fmt::Display, io, str::FromStr};
 
+use aoc_2025::aoc_tests;
+
 #[derive(Debug, Clone)]
 enum Direction {
     Left,
@@ -117,11 +119,8 @@ pub fn part2(input: &str) -> Result<String, io::Error> {
     Ok(points_at_zero.to_string())
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    const INPUT: &str = "\
+#[allow(dead_code)]
+const EXAMPLE_INPUT: &str = "
 L68
 L30
 R48
@@ -134,13 +133,8 @@ R14
 L82
 ";
 
-    #[test]
-    fn part1_example() {
-        assert_eq!(part1(INPUT).unwrap(), "3".to_string());
-    }
-
-    #[test]
-    fn part2_example() {
-        assert_eq!(part2(INPUT).unwrap(), "6".to_string());
-    }
-}
+aoc_tests!(
+    EXAMPLE_INPUT,
+    part1 => "3".to_string(),
+    part2 => "6".to_string(),
+);
