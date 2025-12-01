@@ -1,6 +1,7 @@
 use std::fs::read_to_string;
 
 use clap::{Parser, Subcommand};
+use color_eyre::eyre::Result;
 
 mod days;
 
@@ -15,15 +16,17 @@ enum Command {
     Day01 { input_path: String },
 }
 
-fn main() {
+fn main() -> Result<()> {
     let cli = Cli::parse();
 
     match &cli.command {
         Command::Day01 { input_path } => {
             use days::day01::*;
-            let input = read_to_string(input_path).unwrap();
-            println!("Part 1: {}", part1(&input).unwrap());
-            println!("Part 2: {}", part2(&input).unwrap());
+            let input = read_to_string(input_path)?;
+            println!("Part 1: {}", part1(&input)?);
+            println!("Part 2: {}", part2(&input)?);
         }
-    }
+    };
+
+    Ok(())
 }

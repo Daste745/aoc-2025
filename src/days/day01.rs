@@ -1,4 +1,5 @@
-use std::{fmt::Display, io, str::FromStr};
+use color_eyre::eyre::{Error, Result, eyre};
+use std::{fmt::Display, str::FromStr};
 
 use aoc_2025::aoc_tests;
 
@@ -30,7 +31,7 @@ impl Display for Rotation {
 }
 
 impl FromStr for Rotation {
-    type Err = String;
+    type Err = Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let (dir, distance) = s.split_at(1);
@@ -38,11 +39,11 @@ impl FromStr for Rotation {
         let direction = match dir {
             "L" => Direction::Left,
             "R" => Direction::Right,
-            _ => return Err(format!("Unknown direction: {dir}")),
+            _ => return Err(eyre!("Unknown direction: {dir}")),
         };
 
         let Ok(distance) = distance.parse::<i64>() else {
-            return Err(format!("Failed to parse distance: {distance}"));
+            return Err(eyre!("Failed to parse distance: {distance}"));
         };
 
         Ok(Rotation {
@@ -52,11 +53,8 @@ impl FromStr for Rotation {
     }
 }
 
-fn parse_input(input: &str) -> Vec<Rotation> {
-    input
-        .lines()
-        .map(|l| FromStr::from_str(l).unwrap())
-        .collect()
+fn parse_input(input: &str) -> Result<Vec<Rotation>> {
+    input.lines().map(Rotation::from_str).collect()
 }
 
 struct Dial {
@@ -86,8 +84,8 @@ impl Dial {
     }
 }
 
-pub fn part1(input: &str) -> Result<i64, io::Error> {
-    let rotations = parse_input(input);
+pub fn part1(input: &str) -> Result<i64> {
+    let rotations = parse_input(input)?;
 
     let mut dial = Dial::new();
     let mut points_at_zero = 0;
@@ -101,8 +99,8 @@ pub fn part1(input: &str) -> Result<i64, io::Error> {
     Ok(points_at_zero)
 }
 
-pub fn part2(input: &str) -> Result<i64, io::Error> {
-    let rotations = parse_input(input);
+pub fn part2(input: &str) -> Result<i64> {
+    let rotations = parse_input(input)?;
 
     let mut dial = Dial::new();
     let mut points_at_zero = 0;
