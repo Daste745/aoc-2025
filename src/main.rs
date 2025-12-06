@@ -18,6 +18,7 @@ struct Cli {
 enum Command {
     Day01,
     Day02,
+    Day03,
 }
 
 macro_rules! run_day {
@@ -34,6 +35,7 @@ fn main() -> Result<()> {
     match &cli.command {
         Command::Day01 => run_day!(day01, cli.input_path),
         Command::Day02 => run_day!(day02, cli.input_path),
+        Command::Day03 => run_day!(day03, cli.input_path),
     };
 
     Ok(())
