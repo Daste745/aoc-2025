@@ -58,19 +58,22 @@ pub fn part2(input: &str) -> Result<i64> {
     let ranges = parse_input(input)?;
     let ids = ranges.iter().flat_map(|r| r.start..=r.end);
 
-    // TODO: Part 2
-    fn is_invalid(id: &i64) -> bool {
-        let digits = id.ilog10() + 1;
+    Ok(ids
+        .filter(|id| {
+            let digits = id.ilog10() + 1;
+            let id_chars = id.to_string().chars().collect::<Vec<_>>();
 
-        let midpoint = digits / 2;
-        let first = id / 10i64.pow(midpoint);
-        let second = id % 10i64.pow(midpoint);
-        println!("{id} -> {first} {second}");
-
-        first == second
-    }
-
-    Ok(ids.filter(is_invalid).sum())
+            // Find all divisors of `id`
+            let divisors = (1..digits).filter(|i| digits % i == 0);
+            // Find if **any** combination of chunk sizes has all equal parts
+            divisors.into_iter().any(|divisor| {
+                let mut chunks = id_chars.chunks(divisor as usize).into_iter();
+                let first = chunks.next().unwrap();
+                // **All** chunks must be equal for the ID to considered be invalid
+                chunks.all(|chunk| chunk == first)
+            })
+        })
+        .sum())
 }
 
 #[allow(dead_code)]
