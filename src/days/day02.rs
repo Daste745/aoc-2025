@@ -36,8 +36,7 @@ pub fn part1(input: &str) -> Result<i64> {
     let mut invalid_id_sum: i64 = 0;
 
     for id in ids {
-        // TODO: There must be a better way to do this
-        let digits: u32 = id.to_string().len().try_into().unwrap();
+        let digits = id.ilog10() + 1;
 
         // Odd lengths can't be invalid
         if digits % 2 != 0 {
@@ -61,8 +60,7 @@ pub fn part2(input: &str) -> Result<i64> {
 
     // TODO: Part 2
     fn is_invalid(id: &i64) -> bool {
-        // TODO: There must be a better way to do this
-        let digits: u32 = id.to_string().len().try_into().unwrap();
+        let digits = id.ilog10() + 1;
 
         let midpoint = digits / 2;
         let first = id / 10i64.pow(midpoint);
