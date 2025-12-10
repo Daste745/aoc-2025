@@ -56,27 +56,19 @@ pub fn part2(input: &str) -> Result<i64> {
             .filter(|&other_range| other_range != range)
             .any(|other_range| other_range.fully_contains(range))
         {
-            println!("DROP\t{range}");
             None
         } else {
-            let combined = db
-                .fresh
+            db.fresh
                 .iter()
                 .enumerate()
                 .skip_while(|&(i, _)| i <= idx)
-                // .filter(|&(_, r)| r != range)
                 .fold(Some(*range), |acc, (_, r)| {
                     if let Some(acc) = acc {
-                        let combined = acc.difference(r);
-                        println!("  DIFF\t{acc} - {r}\t-> {combined:?}");
-                        combined
+                        acc.difference(r)
                     } else {
-                        println!("  DIFF -> None");
                         None
                     }
-                });
-            println!("COMBINE\t{range} -> {combined:?}");
-            combined
+                })
         }
     });
 
