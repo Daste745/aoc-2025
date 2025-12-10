@@ -21,6 +21,7 @@ enum Command {
     Day03,
     Day04,
     Day05,
+    Day06,
 }
 
 macro_rules! run_day {
@@ -40,6 +41,7 @@ fn main() -> Result<()> {
         Command::Day03 => run_day!(day03, cli.input_path),
         Command::Day04 => run_day!(day04, cli.input_path),
         Command::Day05 => run_day!(day05, cli.input_path),
+        Command::Day06 => run_day!(day06, cli.input_path),
     };
 
     Ok(())
