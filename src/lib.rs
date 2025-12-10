@@ -1,3 +1,5 @@
+pub mod range;
+
 #[macro_export]
 macro_rules! aoc_tests {
     ($input:ident, $part1:ident => $part1_example:expr, $part2:ident => $part2_example:expr,) => {
