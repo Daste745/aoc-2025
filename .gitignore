@@ -2,3 +2,6 @@
 
 .direnv/
 .envrc.local
+
+day*_example.txt
+day*_input.txt
